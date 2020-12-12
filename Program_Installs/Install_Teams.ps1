@@ -1,0 +1,1 @@
+cd ~\Downloads | curl http://aka.ms/teams64bitmsi | msiexec /i Teams_windows_x64.msi OPTIONS="noAutoStart=true" ALLUSERS=1
