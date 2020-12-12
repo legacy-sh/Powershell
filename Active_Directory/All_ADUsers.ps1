@@ -2,4 +2,4 @@
 
 Import-Module ActiveDirectory
 
-Get-ADUser -Filter * -Properties Enabled,Name,DistinguishedName | ~\Desktop\ADUser.txt
+Get-ADUser -Filter * | FT Enabled,Name,DistinguishedName > ~\Desktop\ADUser.txt
