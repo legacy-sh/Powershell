@@ -17,7 +17,7 @@ function Get-LocalUser_Scan {
         # Creates a current list of all local users
         Get-LocalUser | Format-Table Enabled,Name > ~\Desktop\Scan$(Get-Date -f HH.mm).txt
         # Compares the basline list to a current list of all local users
-        Compare-Object -ReferenceObject (Get-Content -Path ~\Desktop\ADUser.txt) -DifferenceObject (Get-Content -Path ~\Desktop\Scan*) > ~\Desktop\NEW_USERS$(Get-Date -f HH.mm).txt
+        Compare-Object -ReferenceObject (Get-Content -Path ~\Desktop\All_Local_Users.txt) -DifferenceObject (Get-Content -Path ~\Desktop\Scan*) > ~\Desktop\NEW_USERS$(Get-Date -f HH.mm).txt
         # Verifies that there's file name NEW_USERS(Something)
         if (Test-Path -Path ~\Desktop\NEW_USERS* -eq True) 
             {
@@ -39,10 +39,13 @@ function Get-LocalUser_Scan {
     } Until ($leave -eq 1)
 }
 
-$answ = Write-Host ("Would you like to run a baseline??")
+$answ = Read-Host ("Would you like to run a baseline??")
 
 if ($answ -eq "Yes")
 {
+    Write-Host ("Running Script")
+    Start-Sleep -s 3
+    Clear
     Get-LocalUser_Scan
 }
 elseif ($answ -ne "Yes") 
