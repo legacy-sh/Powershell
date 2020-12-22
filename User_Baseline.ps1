@@ -19,14 +19,19 @@ function Get-LocalUser_Scan {
         # Compares the basline list to a current list of all local users
         Compare-Object -ReferenceObject (Get-Content -Path ~\Desktop\All_Local_Users.txt) -DifferenceObject (Get-Content -Path ~\Desktop\Scan*) > ~\Desktop\NEW_USERS$(Get-Date -f HH.mm).txt
         # Verifies that there's file name NEW_USERS(Something)
-        if (Test-Path -Path ~\Desktop\NEW_USERS* -eq True) 
+        $TestP = Test-Path -Path ~\Desktop\NEW_USERS*
+        if ((Get-Content ~\Desktop\NEW_USERS*) -eq $Null)
+            {
+            Remove-Item ~\Desktop\NEW_USERS*
+            }
+        elseif ($TestP -eq "True") 
             {
             $leave = 1
             [System.Windows.MessageBox]::Show('NEW USER(S) DETECTED!!')
             }
         # If there's no file called NEW_USERS(Something)
         # The next line will delete the Scan(current_timestamp) file      
-        elseif (Test-Path -Path ~\Desktop\NEW_USERS* -ne True)
+        elseif ($TestP -ne "True")
             { 
             Remove-Item ~\Desktop\Scan*
             Continue    
